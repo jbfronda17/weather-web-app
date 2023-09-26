@@ -54,6 +54,15 @@ function App() {
     });
   };
 
+  // Function to handle Enter key press to fetch data
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      fetchWeatherData();
+      fetchBackgroundImage();
+      setLocation('');
+    }
+  };
+
   return (
     <div className="app h-screen w-full flex">
       <div className="main w-full" id="bg-image">
@@ -70,6 +79,9 @@ function App() {
                 <input className="search_box outline-none capitalize bg-transparent"
                   type="text"
                   placeholder="Search"
+                  value={location}
+                  onChange={event => setLocation(event.target.value)}
+                  onKeyPress={handleKeyPress}
                 />
               </div>
             </div>
