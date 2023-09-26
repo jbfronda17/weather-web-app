@@ -38,6 +38,15 @@ function App() {
       });
   };
 
+  // Fetch background image function
+  const fetchBackgroundImage = () => {
+    fetch(`https://api.unsplash.com/search/photos?query=${location}&client_id=${import.meta.env.VITE_API_ACCESS_KEY}`)
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("bg-image").style.background = 'url('+data["results"][0]["urls"]["regular"]+')';
+    });
+  };
+
   return (
     <div className="app h-screen w-full flex">
       <div className="main w-full" id="bg-image">
