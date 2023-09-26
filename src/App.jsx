@@ -24,6 +24,12 @@ function App() {
     setLocation('');
   }, []);
 
+  useEffect(() => {
+    const intervalId = setInterval(updateTimeAndDate, 1000);
+    // Clear the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, []);
+
   // Fetch weather data function
   const fetchWeatherData = () => {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${import.meta.env.VITE_API_KEY}&units=metric`)
@@ -61,6 +67,11 @@ function App() {
       fetchBackgroundImage();
       setLocation('');
     }
+  };
+
+  const updateTimeAndDate = () => {
+    setCurrentTime(new Date());
+    setCurrentDate(new Date());
   };
 
   return (
@@ -169,10 +180,10 @@ function App() {
             </div>
             <div className="lower flex justify-between p-10 mt-10">
               <div className="date">
-                <p>Current Date</p>
+                <p>{currentDate.toLocaleDateString(undefined, {weekday:'long', year:'numeric', month:'long', day:'numeric'})}</p>
               </div>
               <div className="time">
-                <p>Current Time</p>
+                <p>{currentTime.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</p>
               </div>
             </div>
           </div>
