@@ -2,6 +2,41 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
+  const [country, setCountry] = useState('');
+  const [description, setDescription] = useState('');
+  const [feelsLike, setFeelsLike] = useState('');
+  const [humidity, setHumidity] = useState('');
+  const [icon, setIcon] = useState('');
+  const [location, setLocation] = useState('Philippines');
+  const [maxTemp, setMaxTemp] = useState('');
+  const [minTemp, setMinTemp] = useState('');
+  const [name, setName] = useState('');
+  const [temp, setTemp] = useState('');
+  const [wind, setWind] = useState('');
+  const imgUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  // Fetch weather data function
+  const fetchWeatherData = () => {
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${import.meta.env.VITE_API_KEY}&units=metric`)
+    .then(res => res.json())
+    .then(data => {
+      setName(data.name);
+      setCountry(data.sys.country);
+      setTemp(Math.round(data.main.temp));
+      setIcon(data.weather[0].icon);
+      setDescription(data.weather[0].description);
+      setFeelsLike(Math.round(data.main.feels_like));
+      setMinTemp(Math.round(data.main.temp_min));
+      setMaxTemp(Math.round(data.main.temp_max));
+      setHumidity(data.main.humidity);
+      setWind(Math.round(data.wind.speed));
+    })
+    .catch((error) => {
+        console.error('Error fetching weather data:', error);
+      });
+  };
 
   return (
     <div className="app h-screen w-full flex">
