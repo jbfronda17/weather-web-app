@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
@@ -16,6 +16,13 @@ function App() {
   const imgUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
   const [currentTime, setCurrentTime] = useState(new Date());
   const [currentDate, setCurrentDate] = useState(new Date());
+
+  // Use useEffect to fetch data and set the background image when the component mounts
+  useEffect(() => {
+    fetchWeatherData();
+    fetchBackgroundImage();
+    setLocation('');
+  }, []);
 
   // Fetch weather data function
   const fetchWeatherData = () => {
@@ -75,11 +82,12 @@ function App() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                   </svg>
-                  <p className="location ms-2">City/Location Country</p>
+                  <p className="location ms-2">{name} {country}</p>
                 </div>
-                <p className="temp">Temp</p>
+                <p className="temp">{temp}°C</p>
                 <div className="description flex items-center">
-                  <p>Description</p>
+                  <img src={imgUrl}/>
+                  <p>{description}</p>
                 </div>
               </div>
               <div className="upper_right w-4/12 p-10 rounded-xl">
@@ -94,7 +102,7 @@ function App() {
                       </div>
                       <div className="flex-col">
                         <p>Feels Like:</p>
-                        <p className="value">Temp</p>
+                        <p className="value">{feelsLike}°C</p>
                       </div>
                     </div>
                     <div className="parameter flex">
@@ -105,7 +113,7 @@ function App() {
                       </div>
                       <div className="flex-col">
                         <p>Min Temp:</p>
-                        <p className="value">Temp</p>
+                        <p className="value">{minTemp}°C</p>
                       </div>
                     </div>
                     <div className="parameter flex">
@@ -116,7 +124,7 @@ function App() {
                       </div>
                       <div className="flex-col">
                         <p>Max Temp:</p>
-                        <p className="value">Temp</p>
+                        <p className="value">{maxTemp}°C</p>
                       </div>
                     </div>
                   </div>
@@ -129,7 +137,7 @@ function App() {
                       </div>
                       <div className="flex-col">
                         <p>Humidity:</p>
-                        <p className="value">Humidity</p>
+                        <p className="value">{humidity}%</p>
                       </div>
                     </div>
                     <div className="parameter flex">
@@ -140,7 +148,7 @@ function App() {
                       </div>
                       <div className="flex-col">
                         <p>Wind:</p>
-                        <p className="value">Wind</p>
+                        <p className="value">{wind} m/s</p>
                       </div>
                     </div>
                   </div>
